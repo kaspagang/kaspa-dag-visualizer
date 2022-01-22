@@ -3,7 +3,7 @@ import isGraph from 'graphology-utils/is-graph';
 
 var DEFAULTS = {
   "height": "blueScore",
-  "yscale": 1000.,
+  "yscale": 1.,
   "xscale": 1.,
   "orderLayers": false
 };
@@ -82,7 +82,7 @@ export default function hierarchialLayout(graph, options) {
     // @ts-ignore
     let hadConflicts = true;
     while (hadConflicts) {
-      console.log(hadConflicts);
+      console.log("Running OrderLayers");
       hadConflicts = false;
       acc["levels"] = Object.fromEntries(
           Object.entries(acc["levels"]).map(([k, level]) => {
@@ -104,7 +104,7 @@ export default function hierarchialLayout(graph, options) {
   }
 
   graph.updateEachNodeAttributes( (node, attrs) => {
-    attrs["y"] = (attrs[options.height] - acc["min"])/(acc["max"] - acc["min"])*options.yscale;
+    attrs["y"] = (attrs[options.height] - acc["min"])*options.yscale;
 
     let length = acc["levels"][attrs[options.height]].length;
     let idx = acc["levels"][attrs[options.height]].indexOf(node);

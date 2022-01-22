@@ -1,2 +1,3 @@
 *.graphml
 /node_modules
+/dist

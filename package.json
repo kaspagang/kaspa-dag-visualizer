@@ -2,20 +2,29 @@
   "name": "kaspa-dag-visualizer",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "kotatsu serve --typescript src/main.tsx --public /data ./src/data --public /img ./resource/img  "
+    "start": "npm run compile && electron dist",
+    "compile": "webpack"
   },
+  "main": "index.js",
   "author": "Tomer Levy",
   "license": "ISC",
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-hmre": "^1.1.1",
+    "copy-webpack-plugin": "^10.2.1",
+    "electron": "^16.0.7",
     "graphology-generators": "^0.11.2",
+    "html-webpack-plugin": "^5.5.0",
     "kotatsu": "^0.22.3",
-    "typescript": "^4.5.5"
+    "sass": "^1.49.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.1",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "bootstrap": "^5.1.3",
@@ -29,7 +38,6 @@
     "react-bootstrap": "^2.1.1",
     "react-dom": "^17.0.2",
     "react-sigma-v2": "^1.3.0",
-    "sigma": "^2.1.3",
-    "ts-loader": "^9.2.6"
+    "sigma": "^2.1.3"
   }
 }
