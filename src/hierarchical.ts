@@ -69,14 +69,8 @@ export default function hierarchialLayout(graph, options) {
     if (acc["max"] === null || attrs[options.height] > acc["max"]) {
       acc["max"] = attrs[options.height];
     }
-
-    // Get width
-    if (!(attrs[options.height] in acc["widths"])) {
-      acc["widths"][attrs[options.height]] = 0;
-    }
-    acc["widths"][attrs[options.height]] = acc["widths"][attrs[options.height]] + 1;
     return acc;
-  }, { "min": null, "max": null, "widths": {}, "levels": {}})
+  }, { "min": null, "max": null, "levels": {}})
 
   if (options.orderLayers) {
     // @ts-ignore
