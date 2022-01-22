@@ -15,7 +15,8 @@ import Modal from 'react-bootstrap/Modal';
 import "react-sigma-v2/lib/react-sigma-v2.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import hierarchialLayout from "./hierarchical";
+import { hierarchicalLayout } from "@/hierarchical";
+import { collapse } from "@/resolution";
 
 import fs from "fs";
 import path from "path";
@@ -59,12 +60,13 @@ export const TestGraph = (options) => {
     .then((res) => res.text())
     .then((gml) => {
       // Parse GEXF string:
-      const graph = Graphml.parse(Graph, gml);
+      const graph = collapse(Graphml.parse(Graph, gml), {});
       graph.updateEachNodeAttributes( (node, attrs) => {
         attrs["label"] = node;
         return attrs;
       });
-      hierarchialLayout(graph, options);
+      hierarchicalLayout(graph, options);
+      console.log(graph);
       loadGraph(graph);
       console.log("Done loading File: ", options.path);
     });
@@ -79,8 +81,10 @@ export default function App() {
   const [orderLayers, setOrderLayers] = useState(false);
   const [graphFile, setGraphFile] = useState(null);
 
+  // Get file list
   const filesArray = fs.readdirSync(path.join(__dirname, 'data'))
                        .filter((name) => name.endsWith("graphml"));
+  // Create navigation dropdown for the file list
   const files = filesArray.map(
       (name, idx) =>
           <NavDropdown.Item onClick={() => setGraphFile("./data/" + name)} key={idx}>{name}</NavDropdown.Item>

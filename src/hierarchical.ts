@@ -1,7 +1,7 @@
 import resolveDefaults from 'graphology-utils/defaults';
 import isGraph from 'graphology-utils/is-graph';
 
-var DEFAULTS = {
+const DEFAULTS = {
   "height": "blueScore",
   "yscale": 1.,
   "xscale": 1.,
@@ -9,7 +9,7 @@ var DEFAULTS = {
 };
 
 function* permute(permutation) {
-  var length = permutation.length,
+  let length = permutation.length,
       c = Array(length).fill(0),
       i = 1, k, p;
 
@@ -45,7 +45,7 @@ function numCrossings(graph, nodes){
   return crossings;
 }
 
-export default function hierarchialLayout(graph, options) {
+export function hierarchicalLayout(graph, options) {
   if (!isGraph(graph))
   throw new Error(
     'graphology-layout/random: the given graph is not a valid graphology instance.'
