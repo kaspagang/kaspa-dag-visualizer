@@ -16,6 +16,7 @@ export function collapse(graph, options) {
         );
 
     options = resolveDefaults(options, DEFAULTS);
+    console.log(options)
 
     let nodesGroups = graph.reduceNodes((acc, node, attrs) => {
         if (options.height in attrs) {

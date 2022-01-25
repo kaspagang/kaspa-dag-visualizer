@@ -60,7 +60,7 @@ export const TestGraph = (options) => {
     .then((res) => res.text())
     .then((gml) => {
       // Parse GEXF string:
-      const graph = collapse(Graphml.parse(Graph, gml), {});
+      const graph = collapse(Graphml.parse(Graph, gml), {"groupHeight": options.groupedHeight});
       graph.updateEachNodeAttributes( (node, attrs) => {
         attrs["label"] = node;
         return attrs;
@@ -78,8 +78,10 @@ export default function App() {
   const [xscale, setXScale] = useState(100.);
   const [yscale, setYScale] = useState(1.);
   const [height, setHeight] = useState("blueScore");
+  const [groupedHeight, setGroupedHeight] = useState(100);
   const [orderLayers, setOrderLayers] = useState(false);
   const [graphFile, setGraphFile] = useState(null);
+
 
   // Get file list
   const filesArray = fs.readdirSync(path.join(__dirname, 'data'))
@@ -90,6 +92,7 @@ export default function App() {
           <NavDropdown.Item onClick={() => setGraphFile("./data/" + name)} key={idx}>{name}</NavDropdown.Item>
   );
 
+  const groupedHeightMenu = [1., 10., 100., 1000.].map((v, idx) => <NavDropdown.Item key={idx} onClick={() => setGroupedHeight(v)}>{v}</NavDropdown.Item>);
   //
   return <div>
   <Navbar variant="dark" bg="dark" expand="lg">
@@ -122,12 +125,13 @@ export default function App() {
             <NavDropdown.Item onClick={() => setOrderLayers(true)}>Yes</NavDropdown.Item>
             <NavDropdown.Item onClick={() => setOrderLayers(false)}>No</NavDropdown.Item>
           </NavDropdown>
+          <NavDropdown id="nav-dropdown-dark" title="groupedHeight (Resolution)" menuVariant="dark"> {groupedHeightMenu} </NavDropdown>
         </Nav>
       </Navbar.Collapse>
     </Container>
   </Navbar>
   <SigmaContainer style={{ height: "800px", width: "1900px" }}>
-  <TestGraph height={height} path={graphFile} xscale={xscale} yscale={yscale} orderLayers={orderLayers}/>
+  <TestGraph height={height} path={graphFile} xscale={xscale} yscale={yscale} orderLayers={orderLayers} groupedHeight={groupedHeight}/>
   <ControlsContainer position={"top-left"}>
     <SearchControl />
     {/*<ForceAtlasControl/>*/}
